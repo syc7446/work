@@ -1,4 +1,4 @@
-Important Notes about the Quad (by Yoonchang Sung)
+Important Notes (by Yoonchang Sung)
 
 - Commands:
 	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600
@@ -19,7 +19,7 @@ Important Notes about the Quad (by Yoonchang Sung)
 	https://dev.px4.io/ros-mavros-offboard.html
 	https://dev.px4.io/simulation-gazebo.html
 	https://dev.px4.io/simulation-ros-interface.html
-
+	
 - Antenna
 	1) bullet: password: SN-00001
 
@@ -45,14 +45,14 @@ Important Notes about the Quad (by Yoonchang Sung)
 	1) Lense has two knobs: Upper knob is for focus. Lower one is for aperture.
 	2) Installation: Refer to https://github.com/KumarRobotics/flea3
 		You need to download 'FlyCapture2' from https://www.ptgrey.com/support/downloads You will get flea3 folder that contains required files.
-		Then, look up the README
+		Then, look up the README.
 
 - TF problem we encountered: Find "global_origin".
 	1) Kalibr_Mocap/src/mavros/mavros_extras/launc/px4_mocap_config.yaml: Change the frame_id from "local_origin" to "global_origin". Then, change the child_frame_id from "fcu" to "fcu_utm".
 	2) In tf_bcast.cpp, cam2imu_publish() has sendTransform() at the end. Change "fcu" to "fcu_utm".
 	3) Have transformPose() in tf_bcast.cpp and set "global_origin"
 
-- Useful commands
+- Useful commands (shortcuts) for Ubuntu
 	1. ps -elf : To see what resources are running.
 	2. find . | grep 'name'
 	3. grep -R 'name' 
@@ -78,8 +78,9 @@ Important Notes about the Quad (by Yoonchang Sung)
 	1) When cloning, do the following: 
 		git clone --recursive git@github.com:raaslab/mavros_mrmt_tracking.git
 
-- Generate custom messages in Matlab for Ros
-	1. The most important!: you should start matlab with sudo.
+- ROS Matlab toolbox
+	1. Generate custom messages in Matlab for Ros
+		- The most important!: you should start matlab with sudo.
 
 - Everything about APM
 	1) Network password of reach:63:05 - emlidreach
@@ -92,11 +93,25 @@ Important Notes about the Quad (by Yoonchang Sung)
 	4) Mission Planner
 		1. EK2_ALT_SOURCE: it selects which sensor we should rely on for altitude.
 
+Power tips:
+	- V must be met (if the adapter provides a higher voltage output, it can break the computer, and if the adapter provides a lower voltage output, it won't turn on the system). 
+	- What matters is the power. Ampere just allows how much of system that can be running. The higher ampere you have, the higher performance system you can use.
 
 
-1. Guided mode check: run waypoint controller on the second floor. The waypoint in this case is zero. See what message pops up.
 
+1. cycle_connect: 
+2. extract_rand_out:
+3. extract_yoon:
+4. graph_planned_generator:
+5. mutli_targ_prim_rob_qilp: CPLEX function (O)
+6. output_1:
+7. planned_generator_func:
+8. Random_Graph_Generator:
+9. script_auto: main function (O)
+10. script_data_extract:
+11. script_max_time:
+12. script_plot_errorbar:
+13. test_qibb: example (X)
 
-Questions about APM:
-	1. Why can I see satelites in the lab? Is it correct?
-	
+Questions:
+1. After many flights, is the altitude of Whittemore still okay?
