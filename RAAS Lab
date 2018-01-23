@@ -1,117 +1,117 @@
 Important Notes (by Yoonchang Sung)
 
-- Commands:
+<Commands>
 	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600
 
-- ARYA:
-	ssh arya@192.168.0.130
+<Quads>
+	- ARYA:
+		ssh arya@192.168.0.130
 
-- SANSA:
-	ssh sansa@192.168.0.150
-	Sansa has a warning message saying "WARNING: NEW QUAD ALGORITHM REQUESTED, BUT COMPILED WITHOUT CGAL SUPPORT, FALLING BACK TO OLD ALGORITHM." We need to fix it by installing CGAL properly.
+	- SANSA:
+		ssh sansa@192.168.0.150
+		Sansa has a warning message saying "WARNING: NEW QUAD ALGORITHM REQUESTED, BUT COMPILED WITHOUT CGAL SUPPORT, FALLING BACK TO OLD ALGORITHM." We need to fix it by installing CGAL properly.
 
-- QGroundControl:
+<QGroundControl>
 	When you get the permission error, then type the following command.
 	sudo chmod 666 /dev/ttyUSB0
 
-- Gazebo + Mavros (references)
+<Gazebo_Mavros_references>
 	https://github.com/raaslab/raaslab-wiki/wiki/PX4-Gazebo-SITL-Mavros
 	https://dev.px4.io/ros-mavros-offboard.html
 	https://dev.px4.io/simulation-gazebo.html
 	https://dev.px4.io/simulation-ros-interface.html
-	
-- Antenna
-	1) bullet: password: SN-00001
 
-- Apriltag packages:
+<Antenna>
+	1. bullet: password: SN-00001
+
+<Apriltag_packages>
 	We need to install two packages.
-	1) https://github.com/swatbotics/apriltags-cpp
+	1. https://github.com/swatbotics/apriltags-cpp
 		This contains plain CMake. Presumably that's why Ashish used "catkin build" instead of "catkin_make".
-	2) https://github.com/personalrobotics/apriltags
+	2. https://github.com/personalrobotics/apriltags
 
-- Run the camera
-	roslaunch flea3 single_node.launch device:=15291221 (For Sansa)
-	roslaunch flea3 single_node.launch device:=17089332 (For Arya)
-
-- Lidar (lidar lite v3)
+<Lidar> (lidar lite v3)
 	manual: http://ardupilot.org/copter/docs/common-rangefinder-lidarlite.html
 	In QGroundControl, search for "LL40" to check if the lidar is diabled or PWM.
 
-- Camera and IMU Calibration (Kalibr)
+<Camera_and_IMU_calibration> (Kalibr)
 	https://github.com/ethz-asl/kalibr/wiki
 	Note that when you run the calibration step, make sure you do NOT have necessary files in the kalibr-cde folder. It won't work.
 
-- Camera (Flea3), Lense (Tamron)
-	1) Lense has two knobs: Upper knob is for focus. Lower one is for aperture.
-	2) Installation: Refer to https://github.com/KumarRobotics/flea3
-		You need to download 'FlyCapture2' from https://www.ptgrey.com/support/downloads You will get flea3 folder that contains required files.
-		Then, look up the README.
+<Camera_issues>
+	- Camera (Flea3), Lense (Tamron)
+		1) Lense has two knobs: Upper knob is for focus. Lower one is for aperture.
+		2) Installation: Refer to https://github.com/KumarRobotics/flea3
+			You need to download 'FlyCapture2' from https://www.ptgrey.com/support/downloads You will get flea3 folder that contains required files.
+			Then, look up the README.
+	- roslaunch flea3 single_node.launch device:=15291221 (For Sansa)
+	- roslaunch flea3 single_node.launch device:=17089332 (For Arya)
 
-- TF problem we encountered: Find "global_origin".
-	1) Kalibr_Mocap/src/mavros/mavros_extras/launc/px4_mocap_config.yaml: Change the frame_id from "local_origin" to "global_origin". Then, change the child_frame_id from "fcu" to "fcu_utm".
-	2) In tf_bcast.cpp, cam2imu_publish() has sendTransform() at the end. Change "fcu" to "fcu_utm".
-	3) Have transformPose() in tf_bcast.cpp and set "global_origin"
+<TF_issues>
+	- TF problem we encountered: Find "global_origin".
+		1. Kalibr_Mocap/src/mavros/mavros_extras/launc/px4_mocap_config.yaml: Change the frame_id from "local_origin" to "global_origin". Then, change the child_frame_id from "fcu" to "fcu_utm".
+		2. In tf_bcast.cpp, cam2imu_publish() has sendTransform() at the end. Change "fcu" to "fcu_utm".
+		3. Have transformPose() in tf_bcast.cpp and set "global_origin"
 
-- Useful commands (shortcuts) for Ubuntu
+<Useful_commands_shortcuts_for_Ubuntu>
 	1. ps -elf : To see what resources are running.
 	2. find . | grep 'name'
 	3. grep -R 'name' 
 	4. dmesg : It tells what has changed with the USB ports.
 
-- UTM Issues
-	1) GPS (Latitude and longitude to UTM coordinates converter)
+<UTM_issues>
+	1. GPS (Latitude and longitude to UTM coordinates converter)
 		https://www.geoplaner.com
 		http://www.synnatschke.de/geo-tools/coordinate-converter.php
-	2) Coordinates
-		1. In Pixhawk, NED (North-East-Down)
-		2. In Mavros, ENU (East-North-Up)
+	2. Coordinates
+		1) In Pixhawk, NED (North-East-Down)
+		2) In Mavros, ENU (East-North-Up)
 
-- Rosbag Issues
-	1) Recording
+<Rosbag_issues>
+	1. Recording
 		rosbag record -a -x "(.*)/compressed(.*)"
-	2) Playing
+	2. Playing
 		- time sync issue
-			1. First, add <param name="/use_sim_time" value="true"/> in your launch file.
-			2. rosbag play (bag file name) --clock --topics (rostopic names)
+			1) First, add <param name="/use_sim_time" value="true"/> in your launch file.
+			2) rosbag play (bag file name) --clock --topics (rostopic names)
 
-- Git: submodules
-	1) When cloning, do the following: 
+-<Git_submodules>
+	1. When cloning, do the following: 
 		git clone --recursive git@github.com:raaslab/mavros_mrmt_tracking.git
 
-- ROS Matlab toolbox
+<ROS_Matlab_toolbox>
 	1. Generate custom messages in Matlab for Ros
 		- The most important!: you should start matlab with sudo.
 
-- Everything about APM
-	1) Network password of reach:63:05 - emlidreach
+<Everything_about_APM>
+	1. Network password of reach:63:05 - emlidreach
 		In order to check the wifi setup for Reach RTK, connect to RTK's wifi then go to http://192.168.42.1/
 		If you can't see the wifi from your network, then it means RTK talks to the antenna, which is good.
-	2) rosservice call /mavros/set_stream_rate 0 10 1
-	3) RC modes
-		1. Loiter mode = Position Hold
-		2. Stabilization mode = Manual mode
-	4) Mission Planner
-		1. EK2_ALT_SOURCE: it selects which sensor we should rely on for altitude.
+	2. rosservice call /mavros/set_stream_rate 0 10 1
+	3. RC modes
+		1) Loiter mode = Position Hold
+		2) Stabilization mode = Manual mode
+	4. Mission Planner
+		1) EK2_ALT_SOURCE: it selects which sensor we should rely on for altitude.
 
-Power tips:
+<Power_tips>
 	- V must be met (if the adapter provides a higher voltage output, it can break the computer, and if the adapter provides a lower voltage output, it won't turn on the system). 
 	- What matters is the power. Ampere just allows how much of system that can be running. The higher ampere you have, the higher performance system you can use.
 
+<New_quad_setup_for_odroid>
+	1. Install git by "sudo apt-get install git-all".
+	2. Install catkin build by folloing site "http://catkin-tools.readthedocs.io/en/latest/installing.html".
+	3. Install mavlink by "sudo apt-get install ros-kinetic-mavlink"
+		- It seems that our forked Mavros has an older version (01/21/2018). We need to update it with the latest version by forking from mavlink/mavros.
+		- sudo apt-get install ros-kinetic-geographic-msgs
+	4. Setup flea3
+		- From "https://www.ptgrey.com/support/downloads", should download FlyCapture ARMHF (Ubuntu 16.04 (32-bit)).
+		- Then, follow the steps from "http://www.ptgrey.com/KB/10357".
+	5. Install Mavros
+		- sudo apt-get install ros-kinetic-mavros
 
+<tomlab> - For SATA
+	- script_auto.m: main file.
+	- script_data_extract.m: QMILP 
+	- script_extract_rand_out.m: random primitive
 
-1. cycle_connect: 
-2. extract_rand_out:
-3. extract_yoon:
-4. graph_planned_generator:
-5. mutli_targ_prim_rob_qilp: CPLEX function (O)
-6. output_1:
-7. planned_generator_func:
-8. Random_Graph_Generator:
-9. script_auto: main function (O)
-10. script_data_extract:
-11. script_max_time:
-12. script_plot_errorbar:
-13. test_qibb: example (X)
-
-Questions:
-1. After many flights, is the altitude of Whittemore still okay?
