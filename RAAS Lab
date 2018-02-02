@@ -9,7 +9,7 @@ Important Notes (by Yoonchang Sung)
 
 	- SANSA:
 		ssh sansa@192.168.0.150
-		Sansa has a warning message saying "WARNING: NEW QUAD ALGORITHM REQUESTED, BUT COMPILED WITHOUT CGAL SUPPORT, FALLING BACK TO OLD ALGORITHM." We need to fix it by installing CGAL properly.
+		Sansa has a warning message saying "WARNING: NEW QUAD ALGORITHM REQUESTED, BUT COMPILED WITHOUT CGAL SUPPORT, FALLING BACK TO OLD ALGORITHM." We hope to fix it by installing CGAL properly.
 
 <QGroundControl>
 	When you get the permission error, then type the following command.
@@ -98,20 +98,71 @@ Important Notes (by Yoonchang Sung)
 	- V must be met (if the adapter provides a higher voltage output, it can break the computer, and if the adapter provides a lower voltage output, it won't turn on the system). 
 	- What matters is the power. Ampere just allows how much of system that can be running. The higher ampere you have, the higher performance system you can use.
 
-<New_quad_setup_for_odroid>
-	1. Install git by "sudo apt-get install git-all".
-	2. Install catkin build by folloing site "http://catkin-tools.readthedocs.io/en/latest/installing.html".
-	3. Install mavlink by "sudo apt-get install ros-kinetic-mavlink"
-		- It seems that our forked Mavros has an older version (01/21/2018). We need to update it with the latest version by forking from mavlink/mavros.
-		- sudo apt-get install ros-kinetic-geographic-msgs
-	4. Setup flea3
-		- From "https://www.ptgrey.com/support/downloads", should download FlyCapture ARMHF (Ubuntu 16.04 (32-bit)).
-		- Then, follow the steps from "http://www.ptgrey.com/KB/10357".
-	5. Install Mavros
-		- sudo apt-get install ros-kinetic-mavros
+<New_quad_setup_for_odroid> This is for Ubuntu 16.04 and Ros Kinetic
+	- Ubuntu setup:
+		1) To set up the sd card with ubuntu: (You should use Windows.)
+			- use SD Formatter to format the sd card, and Win32DiskImager to put the image of Ubuntu on the sd card.
+		2) References:
+			How to install Ubuntu 16.04: http://shshsh.tistory.com/93
+		  	How to format: https://sungwanim.blog.me/220859615186
 
-<tomlab> - For SATA
+  	- Install the mavros_mrmt_tracking ros package
+  		1) Necessary files:
+  			- Install git by "sudo apt-get install git-all".
+  			- Install catkin build by folloing site "http://catkin-tools.readthedocs.io/en/latest/installing.html".
+  		2) Flea3
+			- From "https://www.ptgrey.com/support/downloads", should download FlyCapture ARMHF (FlyCapture 2.11.3.425 SDK - ARMHF - Ubuntu 16.04 (32-bit)).
+			- Then, follow the steps from "http://www.ptgrey.com/KB/10357". However, since it doesn't give the required libraries for Ubuntu 16.04, install libraw1394-11 libgtkmm-2.4-1v5 libglademm-2.4-1v5 and libusb-1.0-0, as appeared in "http://www.ptgrey.com/KB/10548".
+			- Check if the camera is recognized by odroid; do the following.
+				cd <extraction folder>/FlyCapture-<version>-arm/bin
+				export LD_LIBRARY_PATH=./../lib
+				./FlyCap2_arm
+		3) Important order of building packages!! (VERY IMPORTANT!)
+			(1) flea3, camera_base
+			(2) apriltags_ros
+			(3) april_odom_tf
+			(4) mavros, mavlink (as in the next subsection)
+			(5) rest of packages
+		4) Mavros
+			Follow the instruction from "https://github.com/mavlink/mavros/blob/master/mavros/README.md#source-installation".
+
+	- Issues:
+		1) Odroid time and date issue:
+			Do "sudo apt-get install ntp" and "sudo dpkg-reconfigure tzdata".
+		2) Rosinstall_generator issue:
+			When you see "bash: rosinstall_generator: command not found" error, then do the following.
+			sudo apt-get update
+			sudo apt-get install python-rosinstall-generator
+		3) Flea3 ros package 
+			(1) If you encounter this issue: libGLESv2.so.2: cannot open shared object file: No such file or directory
+				sudo ln -s /usr/lib/arm-linux-gnueabihf/mesa-egl/libGLESv2.so.2 /usr/lib/arm-linux-gnueabihf/libGLESv2.so.2
+			(2) If you get this warning: Reconfigure callback failed with exception Failed to start capture | 33 Error starting isochronous stream.:
+				sudo sh -c 'echo 1024 > /sys/module/usbcore/parameters/usbfs_memory_mb'
+			(3) If you see libflycapture.so: file not recognized: File format not recognized, this means that you didn't install the Flea3 firmware yet. Install the firmware.
+
+<tomlab> - For the SATA work
 	- script_auto.m: main file.
 	- script_data_extract.m: QMILP 
 	- script_extract_rand_out.m: random primitive
 
+<What_to_do>
+	1. Quad (Arya)
+		- Test outside again directly connecting the pixhawk to NUC. And see if the local position is subscribing to.
+		- (Outside) connect the pixhawk of Sansa to NUC of Arya to see if the local position is subscribing to.
+		- Use a new connector to odroid to see if the camera is recognized.
+	
+	2. Quad (Sansa)
+		- Odroid:
+			- Flea3 is finally working.
+	
+	3. SATA
+		- Create a script that can draw graph instances in order to analyze Fig. 7.
+	
+	4. GM-PHD journal
+		- Carry out an experiment.
+	
+	5. Paper works
+		- Plan of study
+		- I20
+		- Tax return
+		- icra registration
