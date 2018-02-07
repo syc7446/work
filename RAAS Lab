@@ -62,7 +62,9 @@ Important Notes (by Yoonchang Sung)
 <UTM_issues>
 	1. GPS (Latitude and longitude to UTM coordinates converter)
 		https://www.geoplaner.com
-		http://www.synnatschke.de/geo-tools/coordinate-converter.php
+		1) Latitude and longitude to UTM: http://www.synnatschke.de/geo-tools/coordinate-converter.php
+		2) UTM to latitude and longitude: https://www.engineeringtoolbox.com/utm-latitude-longitude-d_1370.html
+		3) Lat-lon point plotting: https://darrinward.com/lat-long/
 	2. Coordinates
 		1) In Pixhawk, NED (North-East-Down)
 		2) In Mavros, ENU (East-North-Up)
@@ -75,9 +77,11 @@ Important Notes (by Yoonchang Sung)
 			1) First, add <param name="/use_sim_time" value="true"/> in your launch file.
 			2) rosbag play (bag file name) --clock --topics (rostopic names)
 
--<Git_submodules>
-	1. When cloning, do the following: 
-		git clone --recursive git@github.com:raaslab/mavros_mrmt_tracking.git
+<Git>
+	1. Git submodules
+		When cloning, do the following: 
+			git clone --recursive git@github.com:raaslab/mavros_mrmt_tracking.git
+	2. How to restore from detached HEAD: https://stackoverflow.com/a/14757539
 
 <ROS_Matlab_toolbox>
 	1. Generate custom messages in Matlab for Ros
@@ -145,24 +149,54 @@ Important Notes (by Yoonchang Sung)
 	- script_data_extract.m: QMILP 
 	- script_extract_rand_out.m: random primitive
 
+<Study>
+	<Probability_theory>
+		1. Beta distribution: https://stats.stackexchange.com/q/47782
+
 <What_to_do>
-	1. Quad (Arya)
-		- Test outside again directly connecting the pixhawk to NUC. And see if the local position is subscribing to.
-		- (Outside) connect the pixhawk of Sansa to NUC of Arya to see if the local position is subscribing to.
-		- Use a new connector to odroid to see if the camera is recognized.
+	1. Quad
+		- Test /mavros/setpoint_position/local.
+		- Complete if Odroid works fine with the existing system.
 	
-	2. Quad (Sansa)
-		- Odroid:
-			- Flea3 is finally working.
+	2. SATA
+		- Analyze the cases in Fig. 2.
 	
-	3. SATA
-		- Create a script that can draw graph instances in order to analyze Fig. 7.
+	3. GM-PHD journal
+		- Plot the result of the experiment.
 	
-	4. GM-PHD journal
-		- Carry out an experiment.
-	
-	5. Paper works
+	4. Paper works
 		- Plan of study
 		- I20
 		- Tax return
 		- icra registration
+
+<GM-PHD_experiment>
+	- Waypoints for lawn mower (North and East, 17 S)
+		1. 37.19762, -80.579922 (4116878, 537280)
+		2. 37.197618, -80.579359 (4116878, 537330)
+		3. 37.197708, -80.579358 (4116888, 537330)
+		4. 37.19771, -80.579922 (4116888, 537280)
+		5. 37.1978, -80.579921 (4116898, 537280)
+		6. 37.197798, -80.579358 (4116898, 537330)
+		7. 37.197889, -80.579357 (4116908, 537330)
+		8. 37.197891, -80.579921 (4116908, 537280)
+
+	- 5 target true locations
+		1. 37.197823, -80.579507
+		2. 37.197867, -80.579788
+		3. 37.197780, -80.579885
+		4. 37.197680, -80.579712
+		5. 37.197683, -80.579438
+
+<Experiment_plan>
+	1. Current Mavros
+		1) Test waypoint control (/mavros/setpoint_position/local)
+		2) Test auto-based control (Ask Kevin if it's possible to use "mission/push" in guided mode)
+
+	2. Latest Mavros
+		- Test waypoint control (/mavros/setpoint_position/local)
+
+1. GM-PHD (13th March)
+2. Oil spil detection project
+3. icra resubmission
+
