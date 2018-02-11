@@ -57,7 +57,8 @@ Important Notes (by Yoonchang Sung)
 	1. ps -elf : To see what resources are running.
 	2. find . | grep 'name'
 	3. grep -R 'name' 
-	4. dmesg : It tells what has changed with the USB ports.
+	4. find a file that containing a word: grep -r word *
+	5. dmesg : It tells what has changed with the USB ports.
 
 <UTM_issues>
 	1. GPS (Latitude and longitude to UTM coordinates converter)
@@ -167,7 +168,6 @@ Important Notes (by Yoonchang Sung)
 	4. Paper works
 		- Plan of study
 		- I20
-		- Tax return
 		- icra registration
 
 <GM-PHD_experiment>
@@ -182,21 +182,27 @@ Important Notes (by Yoonchang Sung)
 		8. 37.197891, -80.579921 (4116908, 537280)
 
 	- 5 target true locations
-		1. 37.197823, -80.579507
-		2. 37.197867, -80.579788
-		3. 37.197780, -80.579885
-		4. 37.197680, -80.579712
-		5. 37.197683, -80.579438
+		1. 37.197823, -80.579507 (4116900, 537316)
+		2. 37.197867, -80.579788 (4116906, 537292)
+		3. 37.197780, -80.579885 (4116896, 537283)
+		4. 37.197680, -80.579712 (4116885, 537299)
+		5. 37.197683, -80.579438 (4116885, 537323)
+
+<Priorities>
+	1. iros: quad experiments
+	2. icra final submission
+	3. gm-phd journal
+
+<What_to_do>
+	1. icra revision
+	2. gm-phd journal: use Tag36h11.
+	3. iros (oil detection): 
+		- make a package that publishes /oil_detection.
+
+Tag36h11: 8, 9, 3, 2, 0 (x4)
 
 <Experiment_plan>
-	1. Current Mavros
-		1) Test waypoint control (/mavros/setpoint_position/local)
-		2) Test auto-based control (Ask Kevin if it's possible to use "mission/push" in guided mode)
-
-	2. Latest Mavros
-		- Test waypoint control (/mavros/setpoint_position/local)
-
-1. GM-PHD (13th March)
-2. Oil spil detection project
-3. icra resubmission
-
+	1. Test AprilTag package with Tag36h11: prepare one marker with Tag36h11 attached on the top.
+	2. Run test_mission.py using the old version of mavros.
+	3. dye_detection algorithm test:
+		- Interrupt the waypoint control. If that works, interrupt the new goal again. Check the gps coordinate publisher (In this case, there must be two topics).
