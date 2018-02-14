@@ -150,59 +150,73 @@ Important Notes (by Yoonchang Sung)
 	- script_data_extract.m: QMILP 
 	- script_extract_rand_out.m: random primitive
 
-<Study>
+
+<----Study---->
 	<Probability_theory>
 		1. Beta distribution: https://stats.stackexchange.com/q/47782
 
-<What_to_do>
-	1. Quad
-		- Test /mavros/setpoint_position/local.
-		- Complete if Odroid works fine with the existing system.
-	
-	2. SATA
-		- Analyze the cases in Fig. 2.
-	
-	3. GM-PHD journal
-		- Plot the result of the experiment.
-	
-	4. Paper works
-		- Plan of study
-		- I20
-		- icra registration
 
-<GM-PHD_experiment>
-	- Waypoints for lawn mower (North and East, 17 S)
-		1. 37.19762, -80.579922 (4116878, 537280)
-		2. 37.197618, -80.579359 (4116878, 537330)
-		3. 37.197708, -80.579358 (4116888, 537330)
-		4. 37.19771, -80.579922 (4116888, 537280)
-		5. 37.1978, -80.579921 (4116898, 537280)
-		6. 37.197798, -80.579358 (4116898, 537330)
-		7. 37.197889, -80.579357 (4116908, 537330)
-		8. 37.197891, -80.579921 (4116908, 537280)
+<----Tutorials---->
+	<Scientific_writing_tips>
+		https://cgi.duke.edu/web/sciwriting/index.php
 
-	- 5 target true locations
-		1. 37.197823, -80.579507 (4116900, 537316)
-		2. 37.197867, -80.579788 (4116906, 537292)
-		3. 37.197780, -80.579885 (4116896, 537283)
-		4. 37.197680, -80.579712 (4116885, 537299)
-		5. 37.197683, -80.579438 (4116885, 537323)
 
-<Priorities>
-	1. iros: quad experiments
-	2. icra final submission
-	3. gm-phd journal
+<----Personal_info---->
+	<Flights>
+		1. Delta: syc7446, aaaaa1056516Z!
 
-<What_to_do>
-	1. icra revision
-	2. gm-phd journal: use Tag36h11.
-	3. iros (oil detection): 
-		- make a package that publishes /oil_detection.
 
-Tag36h11: 8, 9, 3, 2, 0 (x4)
+<----Research_plan---->
+	<Future_work>
+		1. Two stage stochastic problem for sata
+		2. Informative path planning for search and rescue
+		3. Approximation algorithm for moving and varying-size disks
 
-<Experiment_plan>
-	1. Test AprilTag package with Tag36h11: prepare one marker with Tag36h11 attached on the top.
-	2. Run test_mission.py using the old version of mavros.
-	3. dye_detection algorithm test:
-		- Interrupt the waypoint control. If that works, interrupt the new goal again. Check the gps coordinate publisher (In this case, there must be two topics).
+	<What_to_do>
+		1. Quad
+			- Test /mavros/setpoint_position/local.
+			- Complete if Odroid works fine with the existing system.
+		
+		2. SATA
+			- Analyze the cases in Fig. 2.
+		
+		3. GM-PHD journal
+			- Plot the result of the experiment.
+		
+		4. Paper works
+			- Plan of study
+			- I20
+			- icra registration
+
+	<GM-PHD_experiment>
+		- Waypoints for lawn mower (North and East, 17 S)
+			1. 37.19762, -80.579922 (537280, 4116878)
+			2. 37.197618, -80.579359 (537330, 4116878)
+			3. 37.197708, -80.579358 (537330, 4116888)
+			4. 37.19771, -80.579922 (537280, 4116888)
+			5. 37.1978, -80.579921 (537280, 4116898)
+			6. 37.197798, -80.579358 (537330, 4116898)
+			7. 37.197889, -80.579357 (537330, 4116908)
+			8. 37.197891, -80.579921 (537280, 4116908)
+
+		- 5 target true locations
+			1. 37.197823, -80.579507 (537316, 4116900)
+			2. 37.197867, -80.579788 (537292, 4116906)
+			3. 37.197780, -80.579885 (537283, 4116896)
+			4. 37.197680, -80.579712 (537299, 4116885)
+			5. 37.197683, -80.579438 (537323, 4116885)
+
+	<Priorities>
+		1. iros: quad experiments
+		2. icra final submission
+		3. gm-phd journal
+
+	<What_to_do>
+		1. make markers
+		2. come up with lawn-mower strategies
+
+	Tag36h11: 8, 9, 3, 2, 0 (x4)
+
+	<Experiment_plan>
+		1. lawn-mower path planning with apriltag detection.
+		2. get a data for gm-phd (with five markers).
