@@ -1,109 +1,88 @@
 Important Notes (by Yoonchang Sung)
 
-<Commands>
-	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600
+<----Quadroptor---->
+	<Commands>
+		roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600
 
-<Quads>
-	- ARYA:
-		ssh arya@192.168.0.130
+	<Quads>
+		- ARYA:
+			ssh arya@192.168.0.130
 
-	- SANSA:
-		ssh sansa@192.168.0.150
-		Sansa has a warning message saying "WARNING: NEW QUAD ALGORITHM REQUESTED, BUT COMPILED WITHOUT CGAL SUPPORT, FALLING BACK TO OLD ALGORITHM." We hope to fix it by installing CGAL properly.
+		- SANSA:
+			ssh sansa@192.168.0.150
+			Sansa has a warning message saying "WARNING: NEW QUAD ALGORITHM REQUESTED, BUT COMPILED WITHOUT CGAL SUPPORT, FALLING BACK TO OLD ALGORITHM." We hope to fix it by installing CGAL properly.
 
-<QGroundControl>
-	When you get the permission error, then type the following command.
-	sudo chmod 666 /dev/ttyUSB0
+	<QGroundControl>
+		When you get the permission error, then type the following command.
+		sudo chmod 666 /dev/ttyUSB0
 
-<Gazebo_Mavros_references>
-	https://github.com/raaslab/raaslab-wiki/wiki/PX4-Gazebo-SITL-Mavros
-	https://dev.px4.io/ros-mavros-offboard.html
-	https://dev.px4.io/simulation-gazebo.html
-	https://dev.px4.io/simulation-ros-interface.html
+	<Gazebo_Mavros_references>
+		https://github.com/raaslab/raaslab-wiki/wiki/PX4-Gazebo-SITL-Mavros
+		https://dev.px4.io/ros-mavros-offboard.html
+		https://dev.px4.io/simulation-gazebo.html
+		https://dev.px4.io/simulation-ros-interface.html
 
-<Antenna>
-	1. bullet: password: SN-00001
+	<Antenna>
+		1. bullet: password: SN-00001
 
-<Apriltag_packages>
-	We need to install two packages.
-	1. https://github.com/swatbotics/apriltags-cpp
-		This contains plain CMake. Presumably that's why Ashish used "catkin build" instead of "catkin_make".
-	2. https://github.com/personalrobotics/apriltags
+	<Apriltag_packages>
+		We need to install two packages.
+		1. https://github.com/swatbotics/apriltags-cpp
+			This contains plain CMake. Presumably that's why Ashish used "catkin build" instead of "catkin_make".
+		2. https://github.com/personalrobotics/apriltags
 
-<Lidar> (lidar lite v3)
-	manual: http://ardupilot.org/copter/docs/common-rangefinder-lidarlite.html
-	In QGroundControl, search for "LL40" to check if the lidar is diabled or PWM.
+	<Lidar> (lidar lite v3)
+		manual: http://ardupilot.org/copter/docs/common-rangefinder-lidarlite.html
+		In QGroundControl, search for "LL40" to check if the lidar is diabled or PWM.
 
-<Camera_and_IMU_calibration> (Kalibr)
-	https://github.com/ethz-asl/kalibr/wiki
-	Note that when you run the calibration step, make sure you do NOT have necessary files in the kalibr-cde folder. It won't work.
+	<Camera_and_IMU_calibration> (Kalibr)
+		https://github.com/ethz-asl/kalibr/wiki
+		Note that when you run the calibration step, make sure you do NOT have necessary files in the kalibr-cde folder. It won't work.
 
-<Camera_issues>
-	- Camera (Flea3), Lense (Tamron)
-		1) Lense has two knobs: Upper knob is for focus. Lower one is for aperture.
-		2) Installation: Refer to https://github.com/KumarRobotics/flea3
-			You need to download 'FlyCapture2' from https://www.ptgrey.com/support/downloads You will get flea3 folder that contains required files.
-			Then, look up the README.
-	- roslaunch flea3 single_node.launch device:=15291221 (For Sansa)
-	- roslaunch flea3 single_node.launch device:=17089332 (For Arya)
+	<Camera_issues>
+		- Camera (Flea3), Lense (Tamron)
+			1) Lense has two knobs: Upper knob is for focus. Lower one is for aperture.
+			2) Installation: Refer to https://github.com/KumarRobotics/flea3
+				You need to download 'FlyCapture2' from https://www.ptgrey.com/support/downloads You will get flea3 folder that contains required files.
+				Then, look up the README.
+		- roslaunch flea3 single_node.launch device:=15291221 (For Sansa)
+		- roslaunch flea3 single_node.launch device:=17089332 (For Arya)
 
-<TF_issues>
-	- TF problem we encountered: Find "global_origin".
-		1. Kalibr_Mocap/src/mavros/mavros_extras/launc/px4_mocap_config.yaml: Change the frame_id from "local_origin" to "global_origin". Then, change the child_frame_id from "fcu" to "fcu_utm".
-		2. In tf_bcast.cpp, cam2imu_publish() has sendTransform() at the end. Change "fcu" to "fcu_utm".
-		3. Have transformPose() in tf_bcast.cpp and set "global_origin"
+	<TF_issues>
+		- TF problem we encountered: Find "global_origin".
+			1. Kalibr_Mocap/src/mavros/mavros_extras/launc/px4_mocap_config.yaml: Change the frame_id from "local_origin" to "global_origin". Then, change the child_frame_id from "fcu" to "fcu_utm".
+			2. In tf_bcast.cpp, cam2imu_publish() has sendTransform() at the end. Change "fcu" to "fcu_utm".
+			3. Have transformPose() in tf_bcast.cpp and set "global_origin"
 
-<Useful_commands_shortcuts_for_Ubuntu>
-	1. ps -elf : To see what resources are running.
-	2. find . | grep 'name'
-	3. grep -R 'name' 
-	4. find a file that containing a word: grep -r word *
-	5. dmesg : It tells what has changed with the USB ports.
+	<Useful_commands_shortcuts_for_Ubuntu>
+		1. ps -elf : To see what resources are running.
+		2. find . | grep 'name'
+		3. grep -R 'name' 
+		4. find a file that containing a word: grep -r word *
+		5. dmesg : It tells what has changed with the USB ports.
 
-<UTM_issues>
-	1. GPS (Latitude and longitude to UTM coordinates converter)
-		https://www.geoplaner.com
-		1) Latitude and longitude to UTM: http://www.synnatschke.de/geo-tools/coordinate-converter.php
-		2) UTM to latitude and longitude: https://www.engineeringtoolbox.com/utm-latitude-longitude-d_1370.html
-		3) Lat-lon point plotting: https://darrinward.com/lat-long/
-	2. Coordinates
-		1) In Pixhawk, NED (North-East-Down)
-		2) In Mavros, ENU (East-North-Up)
+	<UTM_issues>
+		1. GPS (Latitude and longitude to UTM coordinates converter)
+			https://www.geoplaner.com
+			1) Latitude and longitude to UTM: http://www.synnatschke.de/geo-tools/coordinate-converter.php
+			2) UTM to latitude and longitude: https://www.engineeringtoolbox.com/utm-latitude-longitude-d_1370.html
+			3) Lat-lon point plotting: https://darrinward.com/lat-long/
+		2. Coordinates
+			1) In Pixhawk, NED (North-East-Down)
+			2) In Mavros, ENU (East-North-Up)
 
-<Rosbag_issues>
-	1. Recording
-		rosbag record -a -x "(.*)/compressed(.*)"
-	2. Playing
-		- time sync issue
-			1) First, add <param name="/use_sim_time" value="true"/> in your launch file.
-			2) rosbag play (bag file name) --clock --topics (rostopic names)
+	<Everything_about_APM>
+		1. Network password of reach:63:05 - emlidreach
+			In order to check the wifi setup for Reach RTK, connect to RTK's wifi then go to http://192.168.42.1/
+			If you can't see the wifi from your network, then it means RTK talks to the antenna, which is good.
+		2. rosservice call /mavros/set_stream_rate 0 10 1
+		3. RC modes
+			1) Loiter mode = Position Hold
+			2) Stabilization mode = Manual mode
+		4. Mission Planner
+			1) EK2_ALT_SOURCE: it selects which sensor we should rely on for altitude.
 
-<Git>
-	1. Git submodules
-		When cloning, do the following: 
-			git clone --recursive git@github.com:raaslab/mavros_mrmt_tracking.git
-	2. How to restore from detached HEAD: https://stackoverflow.com/a/14757539
-
-<ROS_Matlab_toolbox>
-	1. Generate custom messages in Matlab for Ros
-		- The most important!: you should start matlab with sudo.
-
-<Everything_about_APM>
-	1. Network password of reach:63:05 - emlidreach
-		In order to check the wifi setup for Reach RTK, connect to RTK's wifi then go to http://192.168.42.1/
-		If you can't see the wifi from your network, then it means RTK talks to the antenna, which is good.
-	2. rosservice call /mavros/set_stream_rate 0 10 1
-	3. RC modes
-		1) Loiter mode = Position Hold
-		2) Stabilization mode = Manual mode
-	4. Mission Planner
-		1) EK2_ALT_SOURCE: it selects which sensor we should rely on for altitude.
-
-<Power_tips>
-	- V must be met (if the adapter provides a higher voltage output, it can break the computer, and if the adapter provides a lower voltage output, it won't turn on the system). 
-	- What matters is the power. Ampere just allows how much of system that can be running. The higher ampere you have, the higher performance system you can use.
-
-<New_quad_setup_for_odroid> This is for Ubuntu 16.04 and Ros Kinetic
+	<New_quad_setup_for_odroid> This is for Ubuntu 16.04 and Ros Kinetic
 	- Ubuntu setup:
 		1) To set up the sd card with ubuntu: (You should use Windows.)
 			- use SD Formatter to format the sd card, and Win32DiskImager to put the image of Ubuntu on the sd card.
@@ -145,10 +124,38 @@ Important Notes (by Yoonchang Sung)
 				sudo sh -c 'echo 1024 > /sys/module/usbcore/parameters/usbfs_memory_mb'
 			(3) If you see libflycapture.so: file not recognized: File format not recognized, this means that you didn't install the Flea3 firmware yet. Install the firmware.
 
-<tomlab> - For the SATA work
-	- script_auto.m: main file.
-	- script_data_extract.m: QMILP 
-	- script_extract_rand_out.m: random primitive
+
+<----ROS---->
+	<Rosbag_issues>
+		1. Recording
+			rosbag record -a -x "(.*)/compressed(.*)"
+		2. Playing
+			- time sync issue
+				1) First, add <param name="/use_sim_time" value="true"/> in your launch file.
+				2) rosbag play (bag file name) --clock --topics (rostopic names)
+
+	<ROS_Matlab_toolbox>
+	1. Generate custom messages in Matlab for Ros
+		- The most important!: you should start matlab with sudo.
+
+
+<----Git---->
+	1. Git submodules
+		When cloning, do the following: 
+			git clone --recursive git@github.com:raaslab/mavros_mrmt_tracking.git
+	2. How to restore from detached HEAD: https://stackoverflow.com/a/14757539
+
+
+<Power_tips>
+	- V must be met (if the adapter provides a higher voltage output, it can break the computer, and if the adapter provides a lower voltage output, it won't turn on the system). 
+	- What matters is the power. Ampere just allows how much of system that can be running. The higher ampere you have, the higher performance system you can use.
+
+
+<----Software---->
+	<tomlab> - For the SATA work
+		- script_auto.m: main file.
+		- script_data_extract.m: QMILP 
+		- script_extract_rand_out.m: random primitive
 
 
 <----Study---->
@@ -206,17 +213,30 @@ Important Notes (by Yoonchang Sung)
 			4. 37.197680, -80.579712 (537299, 4116885)
 			5. 37.197683, -80.579438 (537323, 4116885)
 
+	<Plume_detection_experiment>
+		- Waypoints
+			1. 37.197074, -80.57846 (537410, 4116818)
+			2. 37.197072, -80.57801 (537450, 4116818)
+			3. 37.196982, -80.57801 (537450, 4116808)
+			4. 37.196984, -80.578461 (537410, 4116808)
+
 	<Priorities>
 		1. iros: quad experiments
 		2. icra final submission
 		3. gm-phd journal
 
 	<What_to_do>
-		1. make markers
-		2. come up with lawn-mower strategies
+		1. paper works: registration of icra
+		2. test in Kentland
+			prerequisite: 1) shift the position of wifi stick on Arya, 2) simulate mission.py using jMavSim, and 3) confirm that mission planner is set up correctly for gm-phd.
+			1) 1st trial with Arya & Husky
+			2) gm-phd data
 
-	Tag36h11: 8, 9, 3, 2, 0 (x4)
+	<Committee_members>
+		Ryan: two questions
+			1. Distributed GM-PHD: is there other approach rather than consensus-based approach?
+			2. For offline version, what's the advantage of considering distributed approach?
 
-	<Experiment_plan>
-		1. lawn-mower path planning with apriltag detection.
-		2. get a data for gm-phd (with five markers).
+	<Check_from_experiments(02.20.2018)>
+		1. detection_history -> True
+		2. Add a publisher of detection positions in DyeDetect.
